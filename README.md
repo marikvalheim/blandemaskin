@@ -1,2 +1,2 @@
-# blandemaskin
-
+# Blandemaskin
+Simen
