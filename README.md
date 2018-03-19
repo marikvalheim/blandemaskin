@@ -1,2 +1,4 @@
 # Blandemaskin
+Mari
 # Simen
+Emil
