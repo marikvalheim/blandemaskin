@@ -14,6 +14,7 @@ C:\WinPython-64bit-3.6.3.0Qt5>python c:\git\Python\QTDesigner\prog.py
 
 """
 
+import os
 import sys
 from PyQt5 import QtCore, QtGui, QtWidgets
 from firstgui import Ui_myfirstgui
@@ -66,26 +67,31 @@ class MyFirstGuiProgram(Ui_myfirstgui):
         print("miksar")
         a = self.Saft.value()
         print("Saft %d" % a)
-        QtCore.QTimer.singleShot(a*100,self.stopPumpA)  
+        QtCore.QTimer.singleShot(a*100,self.stopPumpA)
+        GPIO.output(17,GPIO.HIGH)
         
         b = self.Vodka.value()
         print("Vodka %d" % b)
-        QtCore.QTimer.singleShot(b*100,self.stopPumpB)  
+        QtCore.QTimer.singleShot(b*100,self.stopPumpB)
+        GPIO.output(27,GPIO.HIGH)
         
         c = self.Vatn.value()
         print("Vatn %d" % c)
-        QtCore.QTimer.singleShot(c*100,self.stopPumpC)  
+        QtCore.QTimer.singleShot(c*100,self.stopPumpC)
+        GPIO.outpt(22,GPIO.HIGH)
         
         
     def stopPumpA(self):
         print("Saft stop")
+        GPIO.output(17,GPIO.LOW)
         
     def stopPumpB(self):
         print("Vodka stop")
+        GPIO.output(27,GPIO.LOW)
         
     def stopPumpC(self):
         print("Vatn stop")
-        
+        GPIO.output(22,GPIO.LOW)
 
                 
 
