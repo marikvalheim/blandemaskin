@@ -13,7 +13,7 @@ C:\WinPython-64bit-3.6.3.0Qt5\scripts>pyuic5 -x c:\git\Python\QTDesigner\firstgu
 C:\WinPython-64bit-3.6.3.0Qt5>python c:\git\Python\QTDesigner\prog.py
 
 """
-
+import time
 import os
 import sys
 from PyQt5 import QtCore, QtGui, QtWidgets
@@ -35,12 +35,20 @@ class MyFirstGuiProgram(Ui_myfirstgui):
         Ui_myfirstgui.__init__(self)
         self.setupUi(dialog)
         
-        # Connect "dial" dialog with a custom function (onDialValueChanged)
+     import RPi.GPIO as GPIO
+             GPIO.setmode(GPIO.BCM) # set the board numbering system to BCM
+             print("Running on Raspberry Pi target!")
+
+    def gpio_setup(pin,direction):
+        print("Setting pin %d direction as %s" % (pin, direction))
         
+        # Connect "dial" dialog with a custom function (onDialValueChanged)
+        GPIO.setmode(GPIO.BOARD)
         self.pushButton_1.clicked.connect(self.MIX)
         self.Vatn.valueChanged.connect(self.onVatnValueChanged)
         self.Saft.valueChanged.connect(self.onSaftValueChanged)
         self.Vodka.valueChanged.connect(self.onVodkaValueChanged)
+
         
     def onSaftValueChanged(self, value):
         print("Saft %d" % value)
@@ -60,38 +68,41 @@ class MyFirstGuiProgram(Ui_myfirstgui):
         self.Number_Vodka.setSegmentStyle(2) # Flat segment
         palette = self.Number_Vodka.palette()
         self.Number_Vodka.setProperty("value", value)
+    
+     
+  
+    
         
-
       
     def MIX(self,value):
         print("miksar")
         a = self.Saft.value()
         print("Saft %d" % a)
         QtCore.QTimer.singleShot(a*100,self.stopPumpA)
-        GPIO.output(17,GPIO.HIGH)
+        GPIO.output(17,True)
         
         b = self.Vodka.value()
         print("Vodka %d" % b)
         QtCore.QTimer.singleShot(b*100,self.stopPumpB)
-        GPIO.output(27,GPIO.HIGH)
+        GPIO.output(27,True)
         
         c = self.Vatn.value()
         print("Vatn %d" % c)
         QtCore.QTimer.singleShot(c*100,self.stopPumpC)
-        GPIO.outpt(22,GPIO.HIGH)
+        GPIO.output(22,True)
         
         
     def stopPumpA(self):
         print("Saft stop")
-        GPIO.output(17,GPIO.LOW)
+        GPIO.output(17,False)
         
     def stopPumpB(self):
         print("Vodka stop")
-        GPIO.output(27,GPIO.LOW)
+        GPIO.output(27,False)
         
     def stopPumpC(self):
         print("Vatn stop")
-        GPIO.output(22,GPIO.LOW)
+        GPIO.output(22,False)
 
                 
 
