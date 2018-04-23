@@ -13,7 +13,8 @@ C:\WinPython-64bit-3.6.3.0Qt5\scripts>pyuic5 -x c:\git\Python\QTDesigner\firstgu
 C:\WinPython-64bit-3.6.3.0Qt5>python c:\git\Python\QTDesigner\prog.py
 
 """
-import time
+import RPi.GPIO as GPIO
+GPIO.setmode(GPIO.BCM)
 import os
 import sys
 from PyQt5 import QtCore, QtGui, QtWidgets
@@ -28,22 +29,23 @@ from firstgui import Ui_myfirstgui
 #print("UDP target port:", UDP_PORT )
 #print("message:", MESSAGE)
 
-
+GPIO.setup(17,GPIO.OUT)
+GPIO.setup(22,GPIO.OUT)
+GPIO.setup(27,GPIO.OUT)
 
 class MyFirstGuiProgram(Ui_myfirstgui):
     def __init__(self, dialog):
         Ui_myfirstgui.__init__(self)
         self.setupUi(dialog)
         
-     import RPi.GPIO as GPIO
-             GPIO.setmode(GPIO.BCM) # set the board numbering system to BCM
-             print("Running on Raspberry Pi target!")
-
-    def gpio_setup(pin,direction):
-        print("Setting pin %d direction as %s" % (pin, direction))
+               
+        def gpio_setup(pin,direction):
+            print("Setting pin %d direction as %s" % (pin, direction))
+            
+        def gpio_output(pin, level):
+            print("Setting pin %d level as %d" % (pin, level))
+            
         
-        # Connect "dial" dialog with a custom function (onDialValueChanged)
-        GPIO.setmode(GPIO.BOARD)
         self.pushButton_1.clicked.connect(self.MIX)
         self.Vatn.valueChanged.connect(self.onVatnValueChanged)
         self.Saft.valueChanged.connect(self.onSaftValueChanged)
@@ -70,7 +72,7 @@ class MyFirstGuiProgram(Ui_myfirstgui):
         self.Number_Vodka.setProperty("value", value)
     
      
-  
+    
     
         
       
