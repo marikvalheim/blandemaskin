@@ -71,26 +71,23 @@ class MyFirstGuiProgram(Ui_myfirstgui):
         palette = self.Number_Vodka.palette()
         self.Number_Vodka.setProperty("value", value)
     
-     
-    
-    
-        
+
       
     def MIX(self,value):
         print("miksar")
         a = self.Saft.value()
         print("Saft %d" % a)
-        QtCore.QTimer.singleShot(a*100,self.stopPumpA)
+        QtCore.QTimer.singleShot(a*105,self.stopPumpA)
         GPIO.output(17,True)
         
         b = self.Vodka.value()
         print("Vodka %d" % b)
-        QtCore.QTimer.singleShot(b*100,self.stopPumpB)
+        QtCore.QTimer.singleShot(b*150,self.stopPumpB)
         GPIO.output(27,True)
         
         c = self.Vatn.value()
         print("Vatn %d" % c)
-        QtCore.QTimer.singleShot(c*100,self.stopPumpC)
+        QtCore.QTimer.singleShot(c*105,self.stopPumpC)
         GPIO.output(22,True)
         
         
@@ -105,8 +102,6 @@ class MyFirstGuiProgram(Ui_myfirstgui):
     def stopPumpC(self):
         print("Vatn stop")
         GPIO.output(22,False)
-
-                
 
         
         
